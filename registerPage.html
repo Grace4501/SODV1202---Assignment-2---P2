@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registration Form</title>
+    <link rel="stylesheet" href="registerStyle.css">
+</head>
+<body>
+    <h1>BVC Sport Club Event Registration</h1>
+    <div id="registerForm">
+        <form id="registerForm">
+            <label for="id">ID: </label>
+            <input type="text" id="id" name="id" required>
+            <br>
+            <br>
+            <label for="name">Full Name: </label>
+            <input type="text" id="name" name="name" required>
+            <br>
+            <br>
+            <label for="address">Address: </label>
+            <input type="text" id="address" name="address" required>
+            <br>
+            <br>
+            <label for="status">Status: </label>
+            <select id="status" name="status" required>
+                <option value="">Select Status</option>
+                <option value="student">Student</option>
+                <option value="staff">Staff</option>
+                <option value="volunteer">Volunteer</option>
+            </select>
+            <br>
+            <br>
+            <button type="submit">Register</button>
+        </form>
+    </div>
+    <div id="confirmation" class="show">
+        <h2>Confirmation Notice</h2>
+        <p><strong>ID: </strong> <span id="confirmed-id"></span></p>
+        <p><strong>Full Name: </strong> <span id="confirmed-name"></span></p>
+        <p><strong>Address: </strong> <span id="confirmed-address"></span></p>
+        <p><strong>Status: </strong> <span id="confirmed-status"></span></p>
+        <p><strong>Registration Fee: </strong> <span id="confirmed-fee"></span></p>
+    </div>
+    <script src="registerScript.js"></script>
+</body>
+</html>
