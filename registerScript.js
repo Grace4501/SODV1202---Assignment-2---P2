@@ -1,39 +1,51 @@
-document.addEventListener('DOMContentLoaded', function() {
-    document.getElementById('registerForm').addEventListener('submit', function(event) {
-        console.log('form submitted');
+document.addEventListener('DOMContentLoaded', () => {
+    const registrationForm = document.getElementById('registerForm');
+
+    registrationForm.addEventListener('submit', async (event) => {
         event.preventDefault();
-    
-        const id = document.getElementById('id').value;
-        const name = document.getElementById('name').value;
-        const address = document.getElementById('address').value;
-        const status = document.getElementById('status').value;
-    
-        console.log('ID:', id);
-        console.log('Name:', name);
-        console.log('Address:', address);
-        console.log('Status:', status);
-    
-        let fee = 0;
-        switch (status) {
-            case 'student':
-                fee = 10;
-                break;
-            case 'staff':
-                fee = 50;
-                break;
-            case 'volunteer':
-                fee = 0;
-                break;
+
+        const formData = {
+            id: document.getElementById('id').value,
+            name: document.getElementById('name').value,
+            address: document.getElementById('address').value,
+            status: document.getElementById('status').value
+        };
+
+        try {
+            const response = await fetch('https://sodv1202-assignment-2-backend.onrender.com', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(formData)
+            });
+
+            if (!response.ok) {
+                throw new Error('Error registering user');
+            }
+
+            const data = await response.json();
+            displayConfirmation(data);
+        } catch (error) {
+            console.error('Error:', error);
         }
-    
-        document.getElementById('confirmed-id').textContent = id;
-        document.getElementById('confirmed-name').textContent = name;
-        document.getElementById('confirmed-address').textContent = address;
-        document.getElementById('confirmed-status').textContent = status;
-        document.getElementById('confirmed-fee').textContent = fee;
-    
-        console.log('Confirmation Notice');
-        
-        document.getElementById('confirmation').style.display = 'block';
-    })
-})
+    });
+});
+
+function displayConfirmation(data) {
+    const confirmationContainer = document.getElementById('confirmation');
+
+    if (confirmationContainer) {
+        confirmationContainer.innerHTML = `
+            <h2>Confirmation Notice</h2>
+            <p>ID: ${data.id}</p>
+            <p>Full Name: ${data.name}</p>
+            <p>Address: ${data.address}</p>
+            <p>Status: ${data.status}</p>
+            <p>Fee: ${data.fee}</p>
+        `;
+        confirmationContainer.style.display = 'block';
+    } else {
+        console.error('Confirmation container not found or is null');
+    }
+}
